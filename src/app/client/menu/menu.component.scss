@@ -1,0 +1,22 @@
+.nav-height {
+    min-height: 50px !important;
+    height: 50px !important;
+  }
+  
+  .content-move-right {
+    margin-left: 170px !important;
+    transition: ease 0.2s;
+  }
+  
+  .content-move-left {
+    margin-left: 10px !important;
+    transition: ease 0.1s;
+  }
+  
+  // .active-link {
+  //   background: lightgrey;
+  // }
+  
+  .mat-button:hover {
+    background: lightgrey;
+  }

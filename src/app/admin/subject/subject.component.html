@@ -1,0 +1,77 @@
+<app-menubar></app-menubar> <br>
+
+<div class="table-wrapper-scroll-y my-custom-scrollbar container">
+    <button mat-raised-button color="primary" data-toggle="modal" data-target="#exampleModal">
+        <mat-icon>add</mat-icon>Add new Subject
+    </button> <br> <br>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Subject Code</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let subject of subjects; let i = index">
+                <td>{{subject.name}}</td>
+                <td>{{subject.code}}</td>
+                <td>
+                    <button mat-fab color="primary"
+                        (click)="setActiveSubject(subject)" style="width:50px;height: 50px;" data-toggle="modal"
+                        data-target="#exampleModal">
+                        <mat-icon style="font-size:20px;line-height: 15px;">create</mat-icon>
+                    </button>
+                </td>
+                <td>
+                    <button mat-fab color="warn"
+                        style="width:50px;height: 50px;" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                        [popoverMessage]="popoverMessage" placement="left" (confirm)="deleteSubject(subject.key)"
+                        (cancel)="cancelClicked = true">
+                        <mat-icon style="font-size:20px;line-height: 15px;">delete</mat-icon>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add new Subject</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="submit-form">
+                    <div *ngIf="!submitted">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" required [(ngModel)]="subject.name"
+                                name="name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="code">Subject Code</label>
+                            <input class="form-control" id="code" required [(ngModel)]="subject.code" name="code" />
+                        </div>
+                    </div>
+
+                    <div *ngIf="submitted">
+                        <h4>You submitted successfully!</h4>
+                        <button class="btn btn-success" (click)="newSubject()">Add more Subject</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="saveSubject()" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

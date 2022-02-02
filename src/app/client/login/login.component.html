@@ -1,0 +1,22 @@
+<div class="login-form-container">
+    <div class="login-form">
+        <h1>Đăng nhập</h1>
+        <mat-card class="form-card">
+            <form>
+                <div class="form-group">
+                    <mat-label>Tên người dùng</mat-label>
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="user.name"
+                        placeholder="Nhập tên người dùng" name="name" />
+                </div>
+                <div class="form-group">
+                    <mat-label>Mật khẩu</mat-label>
+                    <input type="password" class="form-control" id="password" required [(ngModel)]="user.password"
+                        placeholder="Nhập mật khẩu" name="password" />
+                </div>
+                <div class="login-actions">
+                    <button mat-raised-button color="primary" (click)="loginUser()">Đăng nhập</button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>

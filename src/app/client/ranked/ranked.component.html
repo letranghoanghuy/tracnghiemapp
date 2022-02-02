@@ -1,0 +1,21 @@
+<app-menu></app-menu><br> <br> <br> 
+<div class="container">
+    <mat-card class="form-card">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Tên người dùng</th>
+                <th>Tổng điểm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of users | slice:0:10; let i = index;">
+                <td>{{i+1}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.point}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </mat-card>
+</div>

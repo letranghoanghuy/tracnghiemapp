@@ -1,0 +1,100 @@
+<app-menubar></app-menubar> <br>
+<div class="container">
+    <form style="float: left;">
+        <mat-form-field appearance="fill">
+            <mat-label>Choose Subject</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="subject" (ngModelChange)="changeSubject($event)">
+                <mat-option *ngFor="let subject of subjects" [value]="subject.name">
+                    {{subject.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" data-toggle="modal" data-target="#exampleModal"
+        style="float: left; margin-left: 20px;" (click)="newQuestion()">
+        <mat-icon>add</mat-icon>Add new Question
+    </button>
+</div>
+<br> <br> <br> <br>
+<div class=" container">
+    <div class="card table-wrapper-scroll-y my-custom-scrollbar">
+        <h5 *ngIf="!selectedSubject">Please select the subject</h5>
+        <h5 *ngIf="selectedSubject">{{selectedValue}}</h5>
+        <p-splitter [style]="{'height': '500px'}" styleClass="p-mb-5">
+            <ng-template pTemplate>
+                <div class="p-col p-d-flex p-ai-center p-jc-center" style="width:100%;">
+                    <div *ngFor="let question of subject.questions" style="cursor: pointer;height:auto;"
+                        (click)="viewQuestion(question)" [ngClass]="getSelectedClass(question)">
+                        <div style="width:80%;float: left; margin-left: 10px;">
+                            {{question?.question}}
+                        </div>
+                        <div style="width:10%;float: right;">
+                            <mat-icon color="primary" style="font-size:25px;cursor: pointer;" data-toggle="modal"
+                                data-target="#exampleModal" (click)="setActiveQuestion(question)">create</mat-icon>
+                            <mat-icon color="warn" style="font-size:25px;cursor: pointer;margin-left: 5px;"
+                                mwlConfirmationPopover [popoverTitle]="popoverTitle" [popoverMessage]="popoverMessage"
+                                placement="left" (confirm)="deleteQuestion(selectedSubject?.key,question.key)"
+                                (cancel)="cancelClicked = true">delete
+                            </mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate>
+                <div class="p-col p-d-flex p-ai-center p-jc-center">
+                    <div style="width:100%;margin-left: 10px;" *ngIf="selectedQuestion"
+                        class="p-col p-d-flex p-ai-center p-jc-center">
+                        {{selectedQuestion?.question}} <br>
+                        <span class="p-float-label" *ngFor="let answer of selectedQuestion?.answers; let i = index">
+                            {{i+1}}.{{answer}}
+                        </span> <br>
+                        <label for="">Correct Answer: {{selectedQuestion?.correctAnswer}}</label>
+                    </div>
+                </div>
+            </ng-template>
+        </p-splitter>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add new Question</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="submit-form">
+                    <div *ngIf="!submitted">
+                        <div class="form-group">
+                            <label for="name">Question</label>
+                            <textarea class="form-control" rows="2" required [(ngModel)]="question.question"></textarea>
+                        </div>
+                        <div class="form-group" *ngFor="let answer of question?.answers; let i = index">
+                            <label for="name">Answer {{i+1}}</label>
+                            <textarea class="form-control" rows="2" required
+                                [(ngModel)]="question.answers[i]"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="code">Correct Answer</label>
+                            <input class="form-control" type="number" required [(ngModel)]="question.correctAnswer" />
+                        </div>
+                    </div>
+
+                    <div *ngIf="submitted">
+                        <h4>You submitted successfully!</h4>
+                        <button class="btn btn-success" (click)="newQuestion()">Add more Question</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button (click)="saveQuestion(selectedSubject?.key,selectedQuestion?.key)"
+                    class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

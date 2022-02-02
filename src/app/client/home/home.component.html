@@ -1,0 +1,52 @@
+<app-menu></app-menu><br>
+<div class="container">
+    <form style="margin-top:40px;">
+        <mat-form-field appearance="fill">
+            <mat-label>Chọn Môn</mat-label>
+            <mat-select [(ngModel)]="selectedValue" name="subject" (ngModelChange)="changeSubject($event)">
+                <mat-option *ngFor="let subject of subjects" [value]="subject.name">
+                    {{subject.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <div>
+        <h5 *ngIf="!selectedSubject">Vui lòng chọn môn để tiếp tục</h5>
+        <h5 *ngIf="selectedSubject">Trắc nghiệm môn {{selectedValue}}</h5>
+        <p-panel [toggleable]="true" [collapsed]='collapsed' *ngFor="let question of subject?.questions; let i = index">
+            <ng-template pTemplate="header">
+                <div>
+                    <i class="pi pi-check" *ngIf="+answers[i] > 0"
+                        style="font-size: 1.5rem; color:greenyellow; font-weight: bold"></i>
+                    Câu hỏi {{ i +1}}
+                </div>
+            </ng-template>
+            <ng-template pTemplate="icons">
+                <button pButton class="p-panel-header-icon p-link">
+                </button>
+            </ng-template>
+            <span>
+                {{question.question}}
+            </span> <br>
+            <span *ngFor="let answer of question.answers; let i2 = index;">
+                <div style="float: left"><p-radioButton (click)="test()" value="{{i2 +1}}" [(ngModel)]="answers[i]"
+                    inputId="answer{{i2 +1}}">
+                </p-radioButton></div>
+                
+                <label for="answer1" style="margin-left: 10px;">{{i2 +1}}.{{answer}} </label>
+                <br>
+            </span>
+        </p-panel>
+         <br>
+         <div *ngIf="selectedSubject">
+            <p-button label="Kiểm tra đáp án" icon="pi pi-check" [disabled]="!answerAll() || submitted" (click)="checkAnswer()">
+            </p-button> <br>
+            <span>Kết quả: {{percentCorrect}} điểm</span>
+         </div>
+        
+    </div>
+
+
+</div>
+<p-toast></p-toast>

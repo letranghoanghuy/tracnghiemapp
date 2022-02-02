@@ -1,0 +1,22 @@
+<div class="login-form-container">
+    <div class="login-form">
+        <h1>Đăng nhập Admin</h1>
+        <mat-card class="form-card">
+            <form>
+                <div class="form-group">
+                    <mat-label>Tên đăng nhập</mat-label>
+                    <input type="text" class="form-control" id="name" required [(ngModel)]="user"
+                        placeholder="Nhập tên đăng nhập" name="name" />
+                </div>
+                <div class="form-group">
+                    <mat-label>Mật khẩu</mat-label>
+                    <input type="password" class="form-control" id="password" required [(ngModel)]="password"
+                        placeholder="Nhập mật khẩu" name="password" />
+                </div>
+                <div class="login-actions">
+                    <button mat-raised-button color="primary" (click)="loginAdmin()">Đăng nhập</button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
+</div>
